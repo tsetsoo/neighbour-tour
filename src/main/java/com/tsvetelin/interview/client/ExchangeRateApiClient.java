@@ -2,26 +2,26 @@ package com.tsvetelin.interview.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsvetelin.interview.service.ExchangeRateProvider;
+import com.tsvetelin.interview.service.ExchangeRateProviderException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 public class ExchangeRateApiClient implements ExchangeRateProvider {
 
-    private static final String EXCHANGE_RATE_API_URL_FORMAT = "https://api.exchangeratesapi.io/latest?base=%s&symbols=%s";
+    private static final String EXCHANGE_RATE_API_URL_FORMAT = "https://api.exchangerate.host/latest?base=%s&symbols=%s";
 
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public Map<String, Double> ratesFromTo(String startingCurrency, List<String> currenciesNeedingExchange) {
+    public Map<String, Double> ratesFromTo(String startingCurrency, Set<String> currenciesNeedingExchange) {
         OkHttpClient client = new OkHttpClient();
 
         var request = new Request.Builder()
@@ -29,12 +29,14 @@ public class ExchangeRateApiClient implements ExchangeRateProvider {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            var responseBody = mapper.readValue(response.body().byteStream(), ExchangeRateApiResponse.class);
-            return responseBody.getRates();
+            if (response.code() != 200) {
+                throw new ExchangeRateProviderException("Unexpected status code while retrieving exchange rates");
+            }
+
+            return mapper.readValue(response.body().byteStream(), ExchangeRateApiResponse.class).getRates();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ExchangeRateProviderException("Unexpected error while retrieving exchange rates", e);
         }
-        return null;
     }
 
 }

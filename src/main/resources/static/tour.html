@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Tour Page</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+    <form id="travel" class="container authenticated">
+        <label for="startingCountry">Starting Country:</label><br>
+        <input type="text" id="startingCountry" name="startingCountry"><br>
+        <label for="budgetPerCountry">Budget per Country:</label><br>
+        <input type="number" id="budgetPerCountry" name="budgetPerCountry"><br>
+        <label for="totalBudget">Total Budget:</label><br>
+        <input type="number" id="totalBudget" name="totalBudget"><br>
+        <label for="startingCurrency">Starting Currency:</label><br>
+        <input type="text" id="startingCurrency" name="startingCurrency"><br>
+        <input type="submit">
+    </form>
+
+    <div id="response"></div>
+</body>
+<script>
+    travel.onsubmit = async (e) => {
+        e.preventDefault();
+        var form = document.querySelector("#travel");
+
+        data = {
+          startingCountry : form.querySelector('input[name="startingCountry"]').value,
+          budgetPerCountry : form.querySelector('input[name="budgetPerCountry"]').value,
+          totalBudget : form.querySelector('input[name="totalBudget"]').value,
+          startingCurrency : form.querySelector('input[name="startingCurrency"]').value
+        }
+
+
+        let response = await fetch('/travel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+        })
+
+        let text = await response.text();
+        document.querySelector("#response").innerHTML = text;
+    };
+
+</script>
+</html>

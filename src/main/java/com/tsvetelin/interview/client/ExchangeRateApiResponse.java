@@ -1,7 +1,10 @@
 package com.tsvetelin.interview.client;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExchangeRateApiResponse {
     private String base;
     private String date;

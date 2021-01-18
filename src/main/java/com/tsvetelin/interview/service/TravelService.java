@@ -31,20 +31,20 @@ public class TravelService {
         return new TravelResponse(tours, budgetLeft, neighboringCountriesCurrenciesTotals);
     }
 
-    private Map<String, Double> foreignCurrenciesTotals(List<String> neighboringCountries, String startingCurrency, double budgetPerCountry, int tours) {
-        var currenciesNeedingExchange = neighboringCountries
+    private Map<String, Double> foreignCurrenciesTotals(List<String> neighboringCountries, String startingCurrency, double budgetPerCountry, int tours) throws CountryInfoProviderException {
+        var currenciesToExchangeToTimesToExchange = neighboringCountries
                 .stream()
                 .map(countryInfoProvider::getCurrencyOf)
                 .filter(currency -> !currency.equals(startingCurrency))
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 
-        var exchangeRates = exchangeRateProvider.ratesFromTo(startingCurrency, currenciesNeedingExchange);
+        var exchangeRates = exchangeRateProvider.ratesFromTo(startingCurrency, currenciesToExchangeToTimesToExchange.keySet());
 
         return exchangeRates.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         e -> e.getKey(),
-                        e -> e.getValue() * budgetPerCountry * tours)
+                        e -> e.getValue() * budgetPerCountry * tours * currenciesToExchangeToTimesToExchange.get(e.getKey()))
                 );
     }
 }

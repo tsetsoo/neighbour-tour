@@ -1,7 +1,6 @@
 package com.tsvetelin.interview.service;
 
 import com.tsvetelin.interview.controller.TravelRequest;
-import com.tsvetelin.interview.controller.TravelResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
 public class TravelServiceTest {
@@ -39,7 +39,7 @@ public class TravelServiceTest {
         Mockito.doReturn(Map.of(
                 "EUR", 0.5,
                 "USD", 0.6
-        )).when(exchangeRateProvider).ratesFromTo(TEST_STARTING_CURRENCY, List.of("EUR", "USD"));
+        )).when(exchangeRateProvider).ratesFromTo(TEST_STARTING_CURRENCY, Set.of("EUR", "USD"));
         travelService = new TravelService(countryInfoProvider, exchangeRateProvider);
     }
 

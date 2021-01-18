@@ -44,14 +44,4 @@ public class TravelRequest {
     public void setStartingCurrency(String startingCurrency) {
         this.startingCurrency = startingCurrency;
     }
-
-    @Override
-    public String toString() {
-        return "TravelRequest{" +
-                "startingCountry='" + startingCountry + '\'' +
-                ", budgetPerCountry=" + budgetPerCountry +
-                ", totalBudget=" + totalBudget +
-                ", startingCurrency='" + startingCurrency + '\'' +
-                '}';
-    }
 }
