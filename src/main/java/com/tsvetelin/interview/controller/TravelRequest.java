@@ -1,5 +1,7 @@
 package com.tsvetelin.interview.controller;
 
+import java.util.Objects;
+
 public class TravelRequest {
     private String startingCountry;
     private double budgetPerCountry;
@@ -43,5 +45,18 @@ public class TravelRequest {
 
     public void setStartingCurrency(String startingCurrency) {
         this.startingCurrency = startingCurrency;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TravelRequest that = (TravelRequest) o;
+        return Double.compare(that.budgetPerCountry, budgetPerCountry) == 0 && Double.compare(that.totalBudget, totalBudget) == 0 && startingCountry.equals(that.startingCountry) && startingCurrency.equals(that.startingCurrency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startingCountry, budgetPerCountry, totalBudget, startingCurrency);
     }
 }
