@@ -1,24 +1,24 @@
 package com.tsvetelin.interview.controller;
 
 import com.tsvetelin.interview.service.CountryNotFoundException;
-import com.tsvetelin.interview.service.TravelService;
+import com.tsvetelin.interview.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class TravelController {
+public class TourController {
 
-    private final TravelService travelService;
+    private final TourService tourService;
 
     @Autowired
-    public TravelController(TravelService travelService) {
-        this.travelService = travelService;
+    public TourController(TourService tourService) {
+        this.tourService = tourService;
     }
 
-    @PostMapping("/travel")
-    public TravelResponse index(@RequestBody TravelRequest travelRequest) {
-        return travelService.calculateTours(travelRequest);
+    @PostMapping("/tour")
+    public TourResponse index(@RequestBody TourRequest tourRequest) {
+        return tourService.calculateTours(tourRequest);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -2,12 +2,12 @@ package com.tsvetelin.interview.controller;
 
 import java.util.Map;
 
-public class TravelResponse {
+public class TourResponse {
     private int tours;
     private double budgetLeft;
     private Map<String, Double> currenciesToPurchase;
 
-    public TravelResponse(int tours, double budgetLeft, Map<String, Double> currenciesToPurchase) {
+    public TourResponse(int tours, double budgetLeft, Map<String, Double> currenciesToPurchase) {
         this.tours = tours;
         this.budgetLeft = budgetLeft;
         this.currenciesToPurchase = currenciesToPurchase;

@@ -2,13 +2,13 @@ package com.tsvetelin.interview.controller;
 
 import java.util.Objects;
 
-public class TravelRequest {
+public class TourRequest {
     private String startingCountry;
     private double budgetPerCountry;
     private double totalBudget;
     private String startingCurrency;
 
-    public TravelRequest(String startingCountry, double budgetPerCountry, double totalBudget, String startingCurrency) {
+    public TourRequest(String startingCountry, double budgetPerCountry, double totalBudget, String startingCurrency) {
         this.startingCountry = startingCountry;
         this.budgetPerCountry = budgetPerCountry;
         this.totalBudget = totalBudget;
@@ -51,7 +51,7 @@ public class TravelRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TravelRequest that = (TravelRequest) o;
+        TourRequest that = (TourRequest) o;
         return Double.compare(that.budgetPerCountry, budgetPerCountry) == 0 && Double.compare(that.totalBudget, totalBudget) == 0 && startingCountry.equals(that.startingCountry) && startingCurrency.equals(that.startingCurrency);
     }
 
